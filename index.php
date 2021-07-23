@@ -9,10 +9,14 @@ if($API_ACTION == 'start' OR $API_ACTION == 'stop' OR $API_ACTION == 'reboot') {
   $fgc = file_get_contents($API_URL);
 }
 
-$status = file_get_contents($API_URL."/status/".$API_KEY);
-$cpu = file_get_contents($API_URL."/cpu/".$API_KEY);
-$ram = file_get_contents($API_URL."/ram/".$API_KEY);
-$storage = file_get_contents($API_URL."/storage/".$API_KEY);
+$status = file_get_contents("https://api.hebergnity.com/vps/status/".$API_KEY);
+$cpu = file_get_contents("https://api.hebergnity.com/vps/cpu/".$API_KEY);
+$ram = file_get_contents("https://api.hebergnity.com/vps/ram/".$API_KEY);
+$storage = file_get_contents("https://api.hebergnity.com/vps/storage/".$API_KEY);
+$mem = valeur_maximum_ram_en_octet - $ram/100;
+$resultmem = $mem / 1e+9;
+$hdd = valeur_maximum_storage_en_octet - $storage/100;
+$resulthdd = $hdd / 1e+9;
 ?>
 
 <!doctype html>
