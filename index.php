@@ -9,10 +9,14 @@ if($API_ACTION == 'start' OR $API_ACTION == 'stop' OR $API_ACTION == 'reboot') {
   $fgc = file_get_contents($API_URL);
 }
 
-$status = file_get_contents($API_URL."/status/".$API_KEY);
-$cpu = file_get_contents($API_URL."/cpu/".$API_KEY);
-$ram = file_get_contents($API_URL."/ram/".$API_KEY);
-$storage = file_get_contents($API_URL."/storage/".$API_KEY);
+$status = file_get_contents("https://api.hebergnity.com/vps/status/".$API_KEY);
+$cpu = file_get_contents("https://api.hebergnity.com/vps/cpu/".$API_KEY);
+$ram = file_get_contents("https://api.hebergnity.com/vps/ram/".$API_KEY);
+$storage = file_get_contents("https://api.hebergnity.com/vps/storage/".$API_KEY);
+$mem = 1950000000 - $ram/100;
+$resultmem = $mem / 1e+9;
+$hd = 32364000000 - $storage/100;
+$resulthd = $hd / 1e+9;
 ?>
 
 <!doctype html>
@@ -99,8 +103,8 @@ $storage = file_get_contents($API_URL."/storage/".$API_KEY);
           <div class="col-md-4 align-items-center">
             <div class="h-100 p-4 text-white bg-dark rounded-3 text-center align-middle">
               CPU : <?= $cpu; ?><br />
-              RAM : <?= $ram; ?><br />
-              Storage : <?= $storage; ?><br />
+              RAM : <?= substr($resultmem, 0, 4); ?> Go<br />
+              Storage : <?= substr($resulthd, 0, 4); ?> Go<br />
             </div>
           </div>
         </div>
